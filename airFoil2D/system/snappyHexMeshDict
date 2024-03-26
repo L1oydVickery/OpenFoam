@@ -172,7 +172,7 @@ castellatedMeshControls
         aerofoil
         {
             // Surface-wise min and max refinement level
-            level (2 2);
+            level (0 0);
 
 
 
