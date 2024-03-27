@@ -1,0 +1,43 @@
+                                                https://www.openfoam.com/documentation/user-guide
+
+Need to have '0' 'constant' 'system' folders  
+
+'0' requires the files, all filled out and correct for the case,
+- 'p'
+- 'U'
+- 'nut'
+
+0 sets the boundary conditions with, p = pressure, U = initiall velocity, nut = wall function
+
+'constant' requires the files, all filled out and correct for the case, 
+- 'transportProperties' 
+- 'turbulenceProperties'
+- 'triSurface' folder with geometry .stl files 
+
+transportProperties - sets a value for nu - kinematic viscosity
+turbulenceProperties - sets the turbulence model for simulation
+triSurface - a folder that is used to create the mesh around the geometry
+
+'system' requires the files, all filled out and correct for the case,
+- 'blockMeshDict'
+- 'controlDict'
+- 'fvSchemes'
+- 'fvSolution'
+
+- blockMeshDict - controls blockmesh utility, define the verticies of the rectange to mesh inside, define front and back faces using 
+numbered verticies (0123) can be front (4567) can be back. 
+- controlDict - sets input parameters that are essential for runnig the simulation, Time steps, when to start, stop and save etc
+- fvSchemes - (Numerical Schemes) defines the treatment of each term in the equations, allows control of temporal, gradient, divergence and intetpolation
+schemes. 
+- fvSolution - (Solution methods) solution parameters and overall control of solution.
+
+
+AFTER ALL IS SET UP AND CHECKED, 
+
+WSL commands, 
+- blockMesh              --- Initial Meshing, Sets the fluid domian and is controlled by 'blockMeshDict'
+- sufaceFeatureExtract   --- Extracts the edge mesh (.emesh), the mesh is refined across the edges, controlled by castellatedMeshControls sub-dictionary 
+                             in snappyHexMeshDict. 
+- snappyHexMesh          --- The mesh generation, creates a mesh either in or outside your geometry (controlled by where you select to start the mesh) 
+- simpleFoam             --- The actual solving of the Governing equations across your mesh, uses the SIMPLE algorithm and is controlled by fvSchemes and
+                             fvSolution.
